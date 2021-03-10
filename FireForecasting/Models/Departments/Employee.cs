@@ -7,11 +7,8 @@ using System.Text;
 namespace FireForecasting.Models.Departments
 {
     /// <summary> Сотрудник. </summary>
-    class Employee:People,IEntity
+    class Employee:People
     {
-        /// <summary> ID сотрудника. </summary>
-        public int Id { get; set; }
-
         /// <summary> Подразделение. </summary>
         public Division  Division { get; set; }
 
@@ -20,5 +17,6 @@ namespace FireForecasting.Models.Departments
 
         /// <summary> Звание сотрудника. </summary>
         public string Rank { get; set; }
+
     }
 }

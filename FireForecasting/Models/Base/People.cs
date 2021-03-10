@@ -6,9 +6,10 @@ using System.Text;
 namespace FireForecasting.Models.Base
 {
     /// <summary> Базовый класс людей. </summary>
-
-    class People
+        class People:IEntity
     {
+        /// <summary> ID человека. </summary>
+        public int Id { get; set; }
         /// <summary> Имя. </summary>
         public string Name { get; set; }
 
