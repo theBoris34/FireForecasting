@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FireForecasting.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,10 @@ namespace FireForecasting
         public static IServiceProvider Services => Host.Services;
 
 
-        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
-        {
-
-        }
+        internal static void ConfigureServices(HostBuilderContext host, IServiceCollection services) => services
+            .AddServices()
+            .AddViewModel()
+            ;
 
         public static bool IsDesignTime { get; private set; } = true;
 

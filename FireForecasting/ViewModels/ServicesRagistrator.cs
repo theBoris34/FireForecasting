@@ -5,8 +5,9 @@ using System.Text;
 
 namespace FireForecasting.ViewModels
 {
-    class ViewModelLocator
+    static class ServicesRagistrator
     {
-        public MainWindowViewModel MainWindowModel => App.Services.GetRequiredService<MainWindowViewModel>();
+        public static IServiceCollection AddServices(this IServiceCollection services) => services
+        ;
     }
 }
