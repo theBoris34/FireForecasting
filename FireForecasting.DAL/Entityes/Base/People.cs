@@ -1,14 +1,13 @@
-﻿using FireForecasting.Models.Interface;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace FireForecasting.Models.Base
+namespace FireForecasting.DAL.Entityes.Base
 {
     /// <summary> Базовый класс людей. </summary>
 
-    class People
+    public class People:Entity
     {
+        [Required]
         /// <summary> Имя. </summary>
         public string Name { get; set; }
 
