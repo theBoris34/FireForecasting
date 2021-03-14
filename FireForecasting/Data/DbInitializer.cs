@@ -129,8 +129,8 @@ namespace FireForecasting.Data
                 .Select(i => new Fire
                 {
                     Adress = $"Адрес {i + 1}",
-                    Divisions = new List<Division> { _Divisions[Rnd.Next(1, __DivisionCount)], _Divisions[Rnd.Next(1, __DivisionCount)] },
-                    Employees = new List<Employee> { _Employees[Rnd.Next(1, __EmployeeCount)], _Employees[Rnd.Next(1, __EmployeeCount)], _Employees[Rnd.Next(1, __EmployeeCount)] },
+                    Division =_Divisions[Rnd.Next(1, __DivisionCount)],
+                    Employee = _Employees[Rnd.Next(1, __EmployeeCount)],
                     CostOfDamage = Rnd.Next(10_000, 500_000_000)
                 });
 

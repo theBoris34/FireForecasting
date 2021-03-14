@@ -11,9 +11,8 @@ namespace FireForecasting.DAL.Entityes.Incidents
         public decimal CostOfDamage { get; set; }
         public string Adress { get; set; }
 
-        public virtual ICollection<Employee> Employees {get;set;}
-
-        public virtual ICollection<Division> Divisions { get; set; }
+        public virtual Employee Employee {get;set;}
+        public virtual Division Division { get; set; }
 
     }
 }
