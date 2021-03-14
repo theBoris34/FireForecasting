@@ -26,6 +26,8 @@ namespace FireForecasting.Models.Base
 
         /// <summary> Примечание. </summary>
         public string Note { get; set; } = "";
+
+
         
     }
 }
