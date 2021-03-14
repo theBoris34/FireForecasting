@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructure\Commands\" />
-    <Folder Include="Models\Base\" />
+    <Folder Include="Models\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
