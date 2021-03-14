@@ -36,8 +36,9 @@ namespace FireForecasting
 
             var host = Host;
 
-            //using (var scope = Services.CreateScope())
-            //    scope.ServiceProvider.GetRequiredService<DBInirializer>().InitializeAsync().Wait();
+
+            using (var scope = Services.CreateScope())
+                scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync().Wait();
 
             base.OnStartup(e);
             await host.StartAsync();

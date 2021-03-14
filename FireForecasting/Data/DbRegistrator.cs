@@ -27,6 +27,7 @@ namespace FireForecasting.Data
                         break;
                 }
             })
+            .AddTransient<DbInitializer>()
             ;
     }
 }
