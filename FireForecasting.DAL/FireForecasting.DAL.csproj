@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FireForecasting.Interfaces\FireForecasting.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>
