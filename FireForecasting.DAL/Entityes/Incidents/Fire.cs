@@ -14,5 +14,17 @@ namespace FireForecasting.DAL.Entityes.Incidents
         public virtual Employee Employee {get;set;}
         public virtual Division Division { get; set; }
 
+        public Fire()
+        {
+
+        }
+        public Fire(decimal costOfDamage, string adress, Employee employee, Division division)
+        {
+            CostOfDamage = costOfDamage;
+            Adress = adress;
+            Employee = employee;
+            Division = division;
+        }
+
     }
 }
