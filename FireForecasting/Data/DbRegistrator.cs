@@ -1,4 +1,5 @@
-﻿using FireForecasting.DAL.Context;
+﻿using FireForecasting.DAL;
+using FireForecasting.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +29,7 @@ namespace FireForecasting.Data
                 }
             })
             .AddTransient<DbInitializer>()
+            .AddRepositoriesInDB()
             ;
     }
 }

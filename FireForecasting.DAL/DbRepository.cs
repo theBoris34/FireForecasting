@@ -1,5 +1,7 @@
 ﻿using FireForecasting.DAL.Context;
 using FireForecasting.DAL.Entityes.Base;
+using FireForecasting.DAL.Entityes.Departments;
+using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace FireForecasting.DAL
 {
-    class DbRepositor<T> : IRepository<T> where T : Entity, new()
+    internal class DbRepository<T> : IRepository<T> where T : Entity, new()
     {
         private readonly DepartmentDB _departmentDB;
         private readonly DbSet<T> _Set;
 
         public bool AutoSaveChanges { get; set; } = true;
 
-        public DbRepositor(DepartmentDB departmentDB)
+        public DbRepository(DepartmentDB departmentDB)
         {
             _departmentDB = departmentDB;
             _Set = departmentDB.Set<T>();
@@ -82,5 +84,36 @@ namespace FireForecasting.DAL
             if (AutoSaveChanges)
                 _departmentDB.SaveChanges();
         }
+    }
+
+    class DivisionRepository : DbRepository<Division>
+    {
+        public override IQueryable<Division> Items => base.Items.Include(item => item.Department);
+
+        public DivisionRepository(DepartmentDB departmentDB) : base(departmentDB) { }
+    }
+
+    class EmployeeRepository : DbRepository<Employee>
+    {
+        public override IQueryable<Employee> Items => base.Items
+            .Include(item => item.Division.Department);
+
+        public EmployeeRepository(DepartmentDB departmentDB) : base(departmentDB) { }
+    }
+    class FireRepository : DbRepository<Fire>
+    {
+        public override IQueryable<Fire> Items => base.Items
+            .Include(item => item.Division)
+            .Include(item => item.Employee);
+
+        public FireRepository(DepartmentDB departmentDB) : base(departmentDB) { }
+    }
+
+    class DepartmentRepository : DbRepository<Department>
+    {
+        public override IQueryable<Department> Items => base.Items
+            .Include(item => item.Divisions);
+
+        public DepartmentRepository(DepartmentDB departmentDB) : base(departmentDB) { }
     }
 }
