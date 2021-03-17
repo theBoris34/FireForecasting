@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 using FireForecasting.DAL.Entityes.Departments;
 using FireForecasting.Interfaces;
 using FireForecasting.Services.Intarface;
+using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 
 namespace FireForecasting.ViewModels
@@ -18,6 +20,32 @@ namespace FireForecasting.ViewModels
 
         public string Title { get=>_Title; set => Set(ref _Title,value); }
 
+        /// <summary> Текущая дочерняямодель представления </summary>/// 
+        private ViewModel _CurrentModel;
+        public ViewModel CurrentModel { get => _CurrentModel; private set => Set(ref _CurrentModel, value); }
+
+        #region Команда отображения представления сотрудников
+        
+        private ICommand _ShowEmployeeViewCommand;
+
+        public ICommand ShowEmployeeViewCommand => _ShowEmployeeViewCommand
+            ??= new LambdaCommand(OnShowEmployeeViewCommandExecuted, CanShowEmployeeViewCommandExecuted);
+
+        private bool CanShowEmployeeViewCommandExecuted() => true;
+
+        private void OnShowEmployeeViewCommandExecuted()
+        {
+            CurrentModel = new EmployeeViewModel(_EmployeeRepository);
+        } 
+
+        #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="EmployeeRepository"></param>
+        /// <param name="DivisionRepository"></param>
+        /// <param name="FireService"></param>
         public MainWindowViewModel(
             IRepository<Employee> EmployeeRepository,
             IRepository<Division> DivisionRepository,
