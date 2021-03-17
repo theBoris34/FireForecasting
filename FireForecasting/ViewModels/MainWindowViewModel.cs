@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using FireForecasting.DAL.Entityes.Departments;
+using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
 using FireForecasting.Services.Intarface;
 using MathCore.WPF.Commands;
@@ -16,6 +17,7 @@ namespace FireForecasting.ViewModels
         private string _Title = "Главное окно программы!";
         private readonly IRepository<Employee> _EmployeeRepository;
         private readonly IRepository<Division> _DivisionRepository;
+        private readonly IRepository<Fire> _FireRepository;
         private readonly IFireService _FireService;
 
         public string Title { get=>_Title; set => Set(ref _Title,value); }
@@ -36,7 +38,23 @@ namespace FireForecasting.ViewModels
         private void OnShowEmployeeViewCommandExecuted()
         {
             CurrentModel = new EmployeeViewModel(_EmployeeRepository);
-        } 
+        }
+
+        #endregion
+
+        #region Команда отображения представления статистики
+
+        private ICommand _ShowStatisticViewCommand;
+
+        public ICommand ShowStatisticViewCommand => _ShowStatisticViewCommand
+            ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecuted);
+
+        private bool CanShowStatisticViewCommandExecuted() => true;
+
+        private void OnShowStatisticViewCommandExecuted()
+        {
+            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository);
+        }
 
         #endregion
 
@@ -49,10 +67,12 @@ namespace FireForecasting.ViewModels
         public MainWindowViewModel(
             IRepository<Employee> EmployeeRepository,
             IRepository<Division> DivisionRepository,
+            IRepository<Fire> FireRepository,
             IFireService FireService)
         {
             _EmployeeRepository = EmployeeRepository;
             _DivisionRepository = DivisionRepository;
+            _FireRepository = FireRepository;
             _FireService = FireService;
 
             //Test();

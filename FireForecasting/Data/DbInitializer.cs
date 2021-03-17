@@ -28,9 +28,9 @@ namespace FireForecasting.Data
         {
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация БД...");
-            _Logger.LogInformation("Удаление существующей БД...");
-            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-            _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
+            //_Logger.LogInformation("Удаление существующей БД...");
+            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            //_Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
             _Logger.LogInformation("Миграция БД...");
             await _db.Database.MigrateAsync();
             _Logger.LogInformation("Миграция БД выполнено за {0} мс", timer.ElapsedMilliseconds);

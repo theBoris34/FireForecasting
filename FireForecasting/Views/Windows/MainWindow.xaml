@@ -9,10 +9,16 @@
         Title="{Binding Title}" Height="450" Width="800">
     <DockPanel>
         <Menu IsMainMenu="True">
-            <MenuItem Header="Сотрудники"/>
+            <MenuItem Header="Сотрудники" Command="{Binding ShowEmployeeViewCommand}"/>
+            <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>
         </Menu>
+        <StatusBar>
+            <StatusBarItem>Готово</StatusBarItem>
+        </StatusBar>
         <Grid>
-            
+            <ContentControl Content="{Binding CurrentModel}">
+                
+            </ContentControl>
         </Grid>
     </DockPanel>
 </Window>
