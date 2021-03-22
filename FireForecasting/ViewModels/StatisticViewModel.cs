@@ -2,6 +2,7 @@
 using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
 using FireForecasting.Models;
+using FireForecasting.Services.Intarface;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace FireForecasting.ViewModels
 {
     class StatisticViewModel : ViewModel
     {
+        private readonly IUserDialog _UserDialug;
         private readonly IRepository<Employee> _EmployeeRepository;
         private readonly IRepository<Division> _DivisionRepository;
         private readonly IRepository<Fire> _FireRepository;
@@ -54,8 +56,9 @@ namespace FireForecasting.ViewModels
 
         #endregion
 
-        public StatisticViewModel(IRepository<Employee> employeeRepository, IRepository<Division> divisionRepository, IRepository<Fire> fireRepository)
+        public StatisticViewModel( IRepository<Employee> employeeRepository, IRepository<Division> divisionRepository, IRepository<Fire> fireRepository, IUserDialog UserDialog)
         {
+            _UserDialug = UserDialog;
             _EmployeeRepository = employeeRepository;
             _DivisionRepository = divisionRepository;
             _FireRepository = fireRepository;

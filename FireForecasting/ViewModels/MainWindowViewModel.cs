@@ -15,6 +15,7 @@ namespace FireForecasting.ViewModels
     class MainWindowViewModel:ViewModel
     {
         private string _Title = "Главное окно программы!";
+        private readonly IUserDialog _UserDialog;
         private readonly IRepository<Employee> _EmployeeRepository;
         private readonly IRepository<Division> _DivisionRepository;
         private readonly IRepository<Fire> _FireRepository;
@@ -37,7 +38,7 @@ namespace FireForecasting.ViewModels
 
         private void OnShowEmployeeViewCommandExecuted()
         {
-            CurrentModel = new EmployeeViewModel(_EmployeeRepository);
+            CurrentModel = new EmployeeViewModel(_EmployeeRepository, _UserDialog);
         }
 
         #endregion
@@ -53,7 +54,7 @@ namespace FireForecasting.ViewModels
 
         private void OnShowStatisticViewCommandExecuted()
         {
-            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository);
+            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository, _UserDialog,);
         }
 
         #endregion
@@ -65,11 +66,13 @@ namespace FireForecasting.ViewModels
         /// <param name="DivisionRepository"></param>
         /// <param name="FireService"></param>
         public MainWindowViewModel(
+            IUserDialog UserDialog,
             IRepository<Employee> EmployeeRepository,
             IRepository<Division> DivisionRepository,
             IRepository<Fire> FireRepository,
             IFireService FireService)
         {
+            _UserDialog = UserDialog;
             _EmployeeRepository = EmployeeRepository;
             _DivisionRepository = DivisionRepository;
             _FireRepository = FireRepository;
