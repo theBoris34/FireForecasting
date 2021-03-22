@@ -14,14 +14,17 @@
                 <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <GroupBox Header="Сотрудники">
-            <GroupBox.Resources>
+            <!--<GroupBox.Resources>
                 <CollectionViewSource x:Key="EmployeeView" Source="{Binding Employees}">
                     <CollectionViewSource.SortDescriptions>
                         <cm:SortDescription PropertyName="Name"/>
                     </CollectionViewSource.SortDescriptions>
                 </CollectionViewSource>
-            </GroupBox.Resources>
-            <ListBox MinWidth="150" ItemsSource="{Binding Source={StaticResource EmployeeView}}"/>
+            </GroupBox.Resources>-->
+            <DockPanel>
+                <TextBox DockPanel.Dock="Top" Text="{Binding EmployeeFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                <ListBox MinWidth="150" ItemsSource="{Binding EmployeesView}"/>
+            </DockPanel>
         </GroupBox>
     </Grid>
 </UserControl>
