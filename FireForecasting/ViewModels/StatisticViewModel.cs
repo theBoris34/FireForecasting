@@ -1,11 +1,12 @@
 ﻿using FireForecasting.DAL.Entityes.Departments;
 using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
-using FireForecasting.Services.Intarface;
+using FireForecasting.Models;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -14,35 +15,41 @@ namespace FireForecasting.ViewModels
 {
     class StatisticViewModel : ViewModel
     {
-        private IRepository<Employee> _EmployeeRepository;
-        private IRepository<Division> _DivisionRepository;
-        private IRepository<Fire> _FireRepository;
-        private IFireService _FireService;
+        private readonly IRepository<Employee> _EmployeeRepository;
+        private readonly IRepository<Division> _DivisionRepository;
+        private readonly IRepository<Fire> _FireRepository;
 
-        private int _EmployeeCount;
-        public int EmployeeCount { get => _EmployeeCount; private set => Set(ref _EmployeeCount, value); }
-
-
+        public ObservableCollection<ManyFiresDivisionInfo> ManyFiresDivision { get; } = new ObservableCollection<ManyFiresDivisionInfo>();
 
         #region Команда вычисления статистики
 
         private ICommand _ComputeStatisticCommand;
 
         public ICommand ComputeStatisticCommand => _ComputeStatisticCommand
-            ??= new LambdaCommandAsync(OnComputeStatisticCommandExecuted, CanComputeStatisticCommandExecuted);
+            ??= new LambdaCommandAsync(OnComputeStatisticCommandExecuted);
 
-        private bool CanComputeStatisticCommandExecuted() => true;
-
+        /// <summary> Логика вычисления подразделения с наибольшим количеством пожаров. </summary>
         private async Task OnComputeStatisticCommandExecuted()
         {
-            EmployeeCount = await _EmployeeRepository.Items.CountAsync();
+            await ComputeManyFiresDivisionAsync();
+        }
 
-            var fires = _FireRepository.Items;
+        private async Task ComputeManyFiresDivisionAsync()
+        {
+            var manyFiresDivision_query = _FireRepository.Items
+                .GroupBy(f => f.Division.Id)
+                .Select(fires => new { DivisionId = fires.Key, Count = fires.Count() })
+                .OrderByDescending(fires => fires.Count)
+                .Take(10)
+                .Join(_DivisionRepository.Items, 
+                    f => f.DivisionId, 
+                    d => d.Id, 
+                    (f, d) => new ManyFiresDivisionInfo { Division = d, FiresCount = f.Count });
 
-            var fires1 = await fires.GroupBy(f => f.Division)
-                              .Select(fire_complited => new { Division = fire_complited.Key, Count = fire_complited.Count() })
-                              .Take(5)
-                              .ToArrayAsync();
+
+            ManyFiresDivision.Clear();
+            foreach (var manyFiresDivision in await manyFiresDivision_query.ToArrayAsync())
+                ManyFiresDivision.Add(manyFiresDivision);
         }
 
         #endregion
