@@ -38,13 +38,13 @@ namespace FireForecasting.ViewModels
         {
             var manyFiresDivision_query = _FireRepository.Items
                 .GroupBy(f => f.Division.Id)
-                .Select(fires => new { DivisionId = fires.Key, Count = fires.Count() })
+                .Select(fires => new { DivisionId = fires.Key, Count = fires.Count()})
                 .OrderByDescending(fires => fires.Count)
                 .Take(10)
                 .Join(_DivisionRepository.Items, 
                     f => f.DivisionId, 
                     d => d.Id, 
-                    (f, d) => new ManyFiresDivisionInfo { Division = d, FiresCount = f.Count });
+                    (f, d) => new ManyFiresDivisionInfo { Division = d, FiresCount = f.Count});
 
 
             ManyFiresDivision.Clear();
