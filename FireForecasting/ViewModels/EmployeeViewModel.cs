@@ -11,6 +11,14 @@ namespace FireForecasting.ViewModels
     {
         private readonly IRepository<Employee> _EmployeeRepository;
 
+        public IEnumerable<Employee> Employees => _EmployeeRepository.Items;
+
+        public EmployeeViewModel()
+        {
+            if (!App.IsDesignTime)
+                throw new InvalidOperationException("Данный конструктор не предназначен для использования вне дизайнера!");
+        }
+
         public EmployeeViewModel(IRepository<Employee> EmployeeRepository)
         {
             _EmployeeRepository = EmployeeRepository;

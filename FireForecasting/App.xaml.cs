@@ -16,6 +16,9 @@ namespace FireForecasting
         
     public partial class App : Application
     {
+        /// <summary>
+        /// Флаг проверки режима разработки </summary>
+        public static bool IsDesignTime { get; private set; } = true;
         private static IHost __Host;
         public static IHost Host => __Host 
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
@@ -29,7 +32,6 @@ namespace FireForecasting
             .AddViewModel()
             ;
 
-        public static bool IsDesignTime { get; private set; } = true;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
