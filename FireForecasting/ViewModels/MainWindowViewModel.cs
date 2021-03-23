@@ -54,7 +54,7 @@ namespace FireForecasting.ViewModels
 
         private void OnShowStatisticViewCommandExecuted()
         {
-            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository, _UserDialog,);
+            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository, _UserDialog);
         }
 
         #endregion

@@ -1,0 +1,43 @@
+﻿<Window x:Class="FireForecasting.Views.Windows.EmployeeEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:FireForecasting.Views.Windows"
+        xmlns:vm="clr-namespace:FireForecasting.ViewModels"
+        d:DataContext="{d:DesignInstance vm:EmployeeEditorViewModel, IsDesignTimeCreatable=True}"
+        Title="{Binding Title}"
+        Height="230" Width="400"
+        WindowStartupLocation="CenterOwner">
+    <DockPanel Margin="4">
+        <TextBlock Text="{Binding IdEmployee, StringFormat=Сотрудник ID:{0}}" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10"/>
+        <UniformGrid Rows="1" DockPanel.Dock="Bottom">
+            <Button Content="Ok" IsDefault="True" Margin="3" Padding="20,3" Command = "{StaticResource DialogResultCommand}" CommandParameter="True"/>
+            <Button Content="Cancel" IsCancel="True" Margin="3" Padding="20,3"  Command = "{StaticResource DialogResultCommand}" CommandParameter="False"/>
+        </UniformGrid>
+        <Grid Margin="5,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Фамилия: " Margin="0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Surname}" Margin="0,3"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Имя: " Margin="0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Name}" Margin="0,3"/>
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="Отчество: " Margin="0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Patronymic}" Margin="0,3"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="Звание: " Margin="0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Rank}" Margin="0,3"/>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="Подразделение: " Margin="0,3"/>
+            <ComboBox Grid.Column="1" Grid.Row="4" Margin="0,3"/>
+        </Grid>
+    </DockPanel>
+</Window>
