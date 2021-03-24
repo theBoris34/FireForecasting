@@ -38,7 +38,7 @@ namespace FireForecasting.ViewModels
 
         private void OnShowEmployeeViewCommandExecuted()
         {
-            CurrentModel = new EmployeeViewModel(_EmployeeRepository, _UserDialog);
+            CurrentModel = new EmployeeViewModel(_EmployeeRepository,_DivisionRepository, _UserDialog);
         }
 
         #endregion
