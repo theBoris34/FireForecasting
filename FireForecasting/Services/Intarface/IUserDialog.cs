@@ -8,5 +8,9 @@ namespace FireForecasting.Services.Intarface
     internal interface IUserDialog
     {
         bool Edit(Employee employee);
+
+        bool ConfirmInformation(string Information, string Caption);
+        bool ConfirmWarning(string Warning, string Caption);
+        bool ConfirmError(string Error, string Caption);
     }
 }

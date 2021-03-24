@@ -108,6 +108,14 @@ namespace FireForecasting.ViewModels
         private void OnRemoveEmployeeCommandExecuted(Employee e)
         {
             var employee_to_remove = e ?? SelectedEmployee;
+
+            if (!_UserDialog.ConfirmWarning($"Удалить сотрудника {employee_to_remove}?", "Удаление сотрудника")) 
+                return;
+
+            _EmployeeRepository.Remove(employee_to_remove.Id);
+            EmployeesCollection.Remove(employee_to_remove);
+            if(ReferenceEquals(SelectedEmployee, employee_to_remove))
+                SelectedEmployee = null;
         }
 
         #endregion

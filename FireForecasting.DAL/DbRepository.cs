@@ -54,7 +54,9 @@ namespace FireForecasting.DAL
 
         public void Remove(int id)
         {
-            _departmentDB.Remove(new T { Id = id });
+            var item = _Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+
+            _departmentDB.Remove(item);
             if (AutoSaveChanges)
                  _departmentDB.SaveChanges();
 

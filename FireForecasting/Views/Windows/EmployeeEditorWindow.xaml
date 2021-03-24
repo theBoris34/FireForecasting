@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:FireForecasting.ViewModels"
         d:DataContext="{d:DesignInstance vm:EmployeeEditorViewModel, IsDesignTimeCreatable=True}"
         Title="{Binding Title}"
-        Height="230" Width="400"
+        Height="240" Width="400"
         WindowStartupLocation="CenterOwner">
     <DockPanel Margin="4">
         <TextBlock Text="{Binding IdEmployee, StringFormat=Сотрудник ID:{0}}" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,10"/>
