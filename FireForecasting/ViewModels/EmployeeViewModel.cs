@@ -45,14 +45,25 @@ namespace FireForecasting.ViewModels
 
         public IEnumerable<Division> Divisions => _DivisionRepository.Items;
 
-        /// <summary> Выбранный сотрудник </summary>
+        /// <summary> Выбранное подразделение </summary>
         private Division _SelectedDivision;
 
         public Division SelectedDivision
         {
             get => _SelectedDivision;
-            set => Set(ref _SelectedDivision, value);
+            set
+            {
+                Set(ref _SelectedDivision, value);
+                EmployeesCollection = new ObservableCollection<Employee>(_EmployeeRepository.Items.Where(e => e.Division == SelectedDivision).ToArray());
+            }
+
         }
+
+        private readonly CollectionViewSource _EmployeeViewSource;
+
+        public ICollectionView EmployeeView => _EmployeeViewSource.View;
+
+        public IEnumerable<Employee> Employees => _EmployeeRepository.Items;
 
         private ObservableCollection<Employee> _EmployeesCollection;
         public ObservableCollection<Employee> EmployeesCollection
@@ -64,38 +75,32 @@ namespace FireForecasting.ViewModels
                 {
                     _EmployeeViewSource.Source = value;
                     _EmployeeViewSource.View.Refresh();
-                    OnPropertyChanged(nameof(EmployeesView));
+                    OnPropertyChanged(nameof(EmployeeView));
                 }
             }
         }
 
 
-
-        #region EmployeeFilter - Искомое слово
-        
-
-        private string _EmployeeFilter;
-
-        public string EmployeeFilter 
-        { 
-            get => _EmployeeFilter; 
-            set
-            {
-                if (Set(ref _EmployeeFilter, value))
-                    _EmployeeViewSource.View.Refresh();
-            }
-        }
-
-        #endregion
-
-        #region EmployeeFilter - Искомое слово
-        
         //Фильтр
         //1. Свойство с текстом фильтра.
         //2. CollectionViewSource ему присвоить источник данных.
         //3. Свойство CollectionViewSource.View
         //4. Обработчик события фильтра
         //5. Соответсвие элемента фильтру, если нет выбрасываем.
+
+
+
+        private string _EmployeeFilter;
+
+        public string EmployeeFilter
+        {
+            get => _EmployeeFilter;
+            set
+            {
+                if (Set(ref _EmployeeFilter, value))
+                    _EmployeeViewSource.View.Refresh();
+            }
+        }
 
         private string _DivisionFilter;
 
@@ -107,16 +112,7 @@ namespace FireForecasting.ViewModels
                 if (Set(ref _DivisionFilter, value))
                     _DivisionViewSource.View.Refresh();
             }
-        }
-
-        #endregion
-
-        private readonly CollectionViewSource _EmployeeViewSource;
-
-        public ICollectionView EmployeesView => _EmployeeViewSource.View;
-
-
-        //public IEnumerable<Employee> SelectedDivisionEmployees => _EmployeeRepository.Items.Where(e => e.Division == SelectedDivision);
+        }              
 
         /// <summary> Выбранный сотрудник </summary>
         private Employee _SelectedEmployee;
@@ -183,8 +179,7 @@ namespace FireForecasting.ViewModels
 
         private async Task OnLoadDataCommandExecuted()
         {
-            DivisionsCollection = new ObservableCollection<Division>(await _DivisionRepository.Items.ToArrayAsync());
-            EmployeesCollection = new ObservableCollection<Employee>(await _EmployeeRepository.Items.ToArrayAsync());
+            DivisionsCollection = new ObservableCollection<Division>(await _DivisionRepository.Items.ToArrayAsync());            
         }
 
         #endregion
@@ -212,22 +207,20 @@ namespace FireForecasting.ViewModels
                     new SortDescription(nameof(Division.Name), ListSortDirection.Ascending)                
                 }
             };
-
             _EmployeeViewSource = new CollectionViewSource
             {
                 SortDescriptions =
                 {
-                    new SortDescription(nameof(Employee.Surname), ListSortDirection.Ascending)
+                    new SortDescription(nameof(Employee.Name), ListSortDirection.Ascending)
                 }
             };
-
             _DivisionViewSource.Filter += OnDivisionFilter;
             _EmployeeViewSource.Filter += OnEmployeeFilter;
         }
 
         private void OnEmployeeFilter(object sender, FilterEventArgs e)
         {
-            
+
             if (!(e.Item is Employee employee) || string.IsNullOrEmpty(EmployeeFilter)) return;
 
             if (!(employee.Name.ToLower().Contains(EmployeeFilter.ToLower()) || employee.Surname.ToLower().Contains(EmployeeFilter.ToLower()) || employee.Rank.ToLower().Contains(EmployeeFilter.ToLower())))

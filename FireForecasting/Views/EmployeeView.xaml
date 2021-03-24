@@ -42,7 +42,7 @@
                         <Button Content="Добавить" Margin="3" Command="{Binding AddNewEmployeeCommand}"/>
                         <Button Content="Удалить" Margin="3" Command="{Binding RemoveEmployeeCommand}" CommandParameter="{Binding SelectedEmployee}"/>
                     </UniformGrid>
-                    <ListBox MinWidth="150" Background="Transparent" ItemsSource="{Binding SelectedDivision.Employees}" SelectedItem="{Binding SelectedEmployee}"/>
+                    <ListBox MinWidth="150" Background="Transparent" ItemsSource="{Binding EmployeeView}" SelectedItem="{Binding SelectedEmployee}"/>
                 </DockPanel>
             </GroupBox>
         </StackPanel>
