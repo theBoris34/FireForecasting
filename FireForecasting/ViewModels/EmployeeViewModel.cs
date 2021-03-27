@@ -45,20 +45,6 @@ namespace FireForecasting.ViewModels
 
         public IEnumerable<Division> Divisions => _DivisionRepository.Items;
 
-        /// <summary> Выбранное подразделение </summary>
-        private Division _SelectedDivision;
-
-        public Division SelectedDivision
-        {
-            get => _SelectedDivision;
-            set
-            {
-                Set(ref _SelectedDivision, value);
-                EmployeesCollection = new ObservableCollection<Employee>(_EmployeeRepository.Items.Where(e => e.Division == SelectedDivision).ToArray());
-            }
-
-        }
-
         private readonly CollectionViewSource _EmployeeViewSource;
 
         public ICollectionView EmployeeView => _EmployeeViewSource.View;
@@ -68,7 +54,7 @@ namespace FireForecasting.ViewModels
         private ObservableCollection<Employee> _EmployeesCollection;
         public ObservableCollection<Employee> EmployeesCollection
         {
-            get => _EmployeesCollection; 
+            get => _EmployeesCollection;
             set
             {
                 if (Set(ref _EmployeesCollection, value))
@@ -80,6 +66,20 @@ namespace FireForecasting.ViewModels
             }
         }
 
+        /// <summary> Выбранное подразделение </summary>
+        private Division _SelectedDivision;
+
+        /// <summary> Выбранное подразделение </summary>
+        public Division SelectedDivision
+        {
+            get => _SelectedDivision;
+            set
+            {
+                Set(ref _SelectedDivision, value);
+                EmployeesCollection = new ObservableCollection<Employee>(_EmployeeRepository.Items.Where(e => e.Division == SelectedDivision).ToArray());
+            }
+
+        }
 
         //Фильтр
         //1. Свойство с текстом фильтра.
@@ -87,9 +87,6 @@ namespace FireForecasting.ViewModels
         //3. Свойство CollectionViewSource.View
         //4. Обработчик события фильтра
         //5. Соответсвие элемента фильтру, если нет выбрасываем.
-
-
-
         private string _EmployeeFilter;
 
         public string EmployeeFilter
@@ -136,7 +133,7 @@ namespace FireForecasting.ViewModels
         {
             var new_employee = new Employee();
 
-            if(!_UserDialog.Edit(new_employee)) return;
+            if(!_UserDialog.Edit(new_employee, _DivisionRepository)) return;
 
             _EmployeesCollection.Add(_EmployeeRepository.Add(new_employee));
             SelectedEmployee = new_employee;
@@ -144,26 +141,25 @@ namespace FireForecasting.ViewModels
 
         #endregion
 
-        #region Команда удаления указанного сотрудника
+        #region Команда редактирования указанного сотрудника
 
-        private ICommand _RemoveEmployeeCommand;
+        private ICommand _EditEmployeeCommand;
 
-        public ICommand RemoveEmployeeCommand => _RemoveEmployeeCommand
-            ??= new LambdaCommand<Employee>(OnRemoveEmployeeCommandExecuted, CanRemoveEmployeeCommandExecuted);
+        public ICommand EditEmployeeCommand => _EditEmployeeCommand
+            ??= new LambdaCommand<Employee>(OnEditEmployeeCommandExecuted, CanEditEmployeeCommandExecuted);
 
-        private bool CanRemoveEmployeeCommandExecuted(Employee e) => e != null || SelectedEmployee !=null;
+        private bool CanEditEmployeeCommandExecuted(Employee e) => e != null || SelectedEmployee !=null;
 
-        private void OnRemoveEmployeeCommandExecuted(Employee e)
+        private void OnEditEmployeeCommandExecuted(Employee e)
         {
-            var employee_to_remove = e ?? SelectedEmployee;
+            var employee_to_edit = e ?? SelectedEmployee;
 
-            if (!_UserDialog.ConfirmWarning($"Удалить сотрудника {employee_to_remove}?", "Удаление сотрудника")) 
-                return;
+            if (!_UserDialog.Edit(employee_to_edit, _DivisionRepository)) return;
 
-            _EmployeeRepository.Remove(employee_to_remove.Id);
-            EmployeesCollection.Remove(employee_to_remove);
-            if(ReferenceEquals(SelectedEmployee, employee_to_remove))
-                SelectedEmployee = null;
+            //_EmployeeRepository.Edit(employee_to_edit.Id);
+            //EmployeesCollection.Edit(employee_to_edit);
+            //if(ReferenceEquals(SelectedEmployee, employee_to_edit))
+            //    SelectedEmployee = null;
         }
 
         #endregion

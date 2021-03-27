@@ -1,4 +1,5 @@
 ﻿using FireForecasting.DAL.Entityes.Departments;
+using FireForecasting.Interfaces;
 using FireForecasting.Services.Intarface;
 using FireForecasting.ViewModels;
 using FireForecasting.Views.Windows;
@@ -30,9 +31,9 @@ namespace FireForecasting.Services
                == MessageBoxResult.OK;
 
 
-        public bool Edit(Employee employee)
+        public bool Edit(Employee employee, IRepository<Division> DivisionRepositor)
         {
-            var employee_editor_model = new EmployeeEditorViewModel(employee);
+            var employee_editor_model = new EmployeeEditorViewModel(employee, DivisionRepositor);
             var employee_editor_window = new EmployeeEditorWindow
             {
                 DataContext = employee_editor_model
@@ -47,6 +48,5 @@ namespace FireForecasting.Services
 
             return true;
         }
-        
     }
 }

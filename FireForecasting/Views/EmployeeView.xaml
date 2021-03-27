@@ -21,11 +21,7 @@
         </Grid.ColumnDefinitions>
         <GroupBox Header="Подразделения" Grid.Column="0" Margin="0,0,5,0">
             <DockPanel>
-                <TextBox DockPanel.Dock="Top" Text="{Binding DivisionFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
-                <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="3">
-                    <Button Content="Добавить" Margin="3" Command=""/>
-                    <Button Content="Удалить" Margin="3" Command="" CommandParameter="{Binding SelectedDivision}"/>
-                </UniformGrid>
+                <TextBox DockPanel.Dock="Top" Text="{Binding DivisionFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>                
                 <ListBox MinWidth="150" Background="Transparent" ItemsSource="{Binding DivisionView}" SelectedItem="{Binding SelectedDivision}"/>
             </DockPanel>
         </GroupBox>
@@ -39,8 +35,8 @@
                 <DockPanel Height="300">
                     <TextBox DockPanel.Dock="Top" Text="{Binding EmployeeFilter, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,5"/>
                     <UniformGrid DockPanel.Dock="Bottom" Rows="1" Margin="3">
-                        <Button Content="Добавить" Margin="3" Command="{Binding AddNewEmployeeCommand}"/>
-                        <Button Content="Удалить" Margin="3" Command="{Binding RemoveEmployeeCommand}" CommandParameter="{Binding SelectedEmployee}"/>
+                        <Button Content="Добавить сотрудника" Margin="3" Command="{Binding AddNewEmployeeCommand}"/>
+                        <Button Content="Редактировать" Margin="3" Command="{Binding EditEmployeeCommand}" CommandParameter="{Binding SelectedEmployee}"/>
                     </UniformGrid>
                     <ListBox MinWidth="150" Background="Transparent" ItemsSource="{Binding EmployeeView}" SelectedItem="{Binding SelectedEmployee}"/>
                 </DockPanel>
