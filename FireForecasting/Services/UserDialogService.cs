@@ -30,9 +30,9 @@ namespace FireForecasting.Services
                == MessageBoxResult.OK;
 
 
-        public bool Edit(Employee employee)
+        public bool Edit(Employee employee, Division division)
         {
-            var employee_editor_model = new EmployeeEditorViewModel(employee);
+            var employee_editor_model = new EmployeeEditorViewModel(employee, division);
             var employee_editor_window = new EmployeeEditorWindow
             {
                 DataContext = employee_editor_model
@@ -41,6 +41,7 @@ namespace FireForecasting.Services
             if (employee_editor_window.ShowDialog() != true) return false;
 
             employee.Surname = employee_editor_model.Surname;
+            employee.Division = division;
             employee.Name = employee_editor_model.Name;
             employee.Patronymic = employee_editor_model.Patronymic;
             employee.Rank = employee_editor_model.Rank;

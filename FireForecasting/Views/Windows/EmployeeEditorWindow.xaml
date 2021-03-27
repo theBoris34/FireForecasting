@@ -37,7 +37,7 @@
             <TextBlock Grid.Column="0" Grid.Row="3" Text="Звание: " Margin="0,3"/>
             <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding Rank}" Margin="0,3"/>
             <TextBlock Grid.Column="0" Grid.Row="4" Text="Подразделение: " Margin="0,3"/>
-            <ComboBox Grid.Column="1" Grid.Row="4" Margin="0,3"/>
+            <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Division.Name}" IsEnabled="False" Margin="0,3"/>
         </Grid>
     </DockPanel>
 </Window>

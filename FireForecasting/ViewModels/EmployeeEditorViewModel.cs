@@ -59,22 +59,33 @@ namespace FireForecasting.ViewModels
         #region IdEmployee - Идентификатор сотрудника
 
         public int IdEmployee { get; }
+
+        #endregion
+
+        #region Division - подразделение сотрудника
+        private Division _Division;
+        public Division Division
+        {
+            get => _Division;
+            set => Set(ref _Division, value);
+        }
         #endregion
 
         public EmployeeEditorViewModel()
-            :this(new Employee { Surname = "Иванов", Name = "Иван", Patronymic = "Иванович", Rank = "рядовой вн.службы"})
+            //:this(new Employee { Surname = "Иванов", Name = "Иван", Patronymic = "Иванович", Rank = "рядовой вн.службы"})
         {
             if (!App.IsDesignTime)
                 throw new InvalidOperationException("Конструктор не предназначен для работы вне дизайнера!");
         }
 
-        public EmployeeEditorViewModel(Employee employee)
+        public EmployeeEditorViewModel(Employee employee, Division division)
         {
             IdEmployee = employee.Id;
             Name = employee.Name;
             Surname = employee.Surname;
             Patronymic = employee.Patronymic;
             Rank = employee.Rank;
+            Division = division;
 
         }
 

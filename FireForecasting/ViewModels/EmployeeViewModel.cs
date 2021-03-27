@@ -136,7 +136,7 @@ namespace FireForecasting.ViewModels
         {
             var new_employee = new Employee();
 
-            if(!_UserDialog.Edit(new_employee)) return;
+            if(!_UserDialog.Edit(new_employee, SelectedDivision)) return;
 
             _EmployeesCollection.Add(_EmployeeRepository.Add(new_employee));
             SelectedEmployee = new_employee;
