@@ -4,7 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:FireForecasting.ViewModels"
-             xmlns:local="clr-namespace:FireForecasting.Views"             
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:local="clr-namespace:FireForecasting.Views"       
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance {x:Type vm:IncidentsViewModel}}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -15,16 +17,48 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <TextBlock Width="300" Margin="10,5"/>
-            <Button Content="  Показать  "/>
-            <DatePickerTextBox></DatePickerTextBox>
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_SearchLocation"  Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
+                <TextBox  Width="300" TextAlignment="Left" TextWrapping="NoWrap"  HorizontalContentAlignment="Left"/>
+            </StackPanel>
+            <TextBlock Text="Фильтр по дате:" Margin="5,5" VerticalAlignment="Center"/>
+            <TextBlock Text="от" Margin="5" VerticalAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding SelectedDate}" SelectedDateFormat="Short" Text="Дата От" Margin="3" FirstDayOfWeek="Monday" IsTabStop="True" IsTodayHighlighted="True" VerticalContentAlignment="Top" FlowDirection="RightToLeft"/>
+            <TextBlock Text="до" Margin="5,5" VerticalAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding SelectedDate}" Text="Дата До" Margin="3" FirstDayOfWeek="Monday" AutomationProperties.IsRequiredForForm="True" AutomationProperties.IsOffscreenBehavior="Default" FontStyle="Normal" FlowDirection="RightToLeft" UseLayoutRounding="False"/>
+            <Button Content="Показать" Width="80" Margin="10,3" />
         </StackPanel>
-        <DataGrid ItemsSource="{Binding ManyFiresDivision}" AutoGenerateColumns="False" Grid.Row="1">
+        <DataGrid ItemsSource="{Binding Fires}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата" Width="100"/>
-                <DataGridTextColumn Header="Адрес" Width="*" Binding="{Binding Division.Name}" />
+                <DataGridTextColumn Header="Дата" Width="70" Binding="{Binding Path=Date, StringFormat={}{0:dd-MM-yyyy}}"/>
+                <DataGridTextColumn Header="Время" Width="50" Binding="{Binding Path=Date, StringFormat={}{0:HH:mm}}"/>
+                <DataGridTextColumn Header="Район" Width="170" Binding="{Binding Path=Region}" />
+                <DataGridTextColumn Header="Адрес" Width="*" Binding="{Binding Path=Adress}" />
                 <DataGridTextColumn Header="Состояние"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Margin="5,5" OpacityMask="Red">
+                <fa5:SvgAwesome Icon="Solid_Fire" Height="15" Width="15" />
+                <TextBlock Text="Пожары" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="FireCheckBox"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_CarSide" Height="15" Width="15" />
+                <TextBlock Text="ДТП" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="RoadAccidentCheckBox"></CheckBox>
+            </StackPanel>            
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_ExclamationTriangle" Height="15" Width="15" />
+                <TextBlock Text="Прочее" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="OtherCheckBox"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Regular_CheckCircle" Height="15" Width="15" />
+                <TextBlock Text="Выделить всё" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="AllCheckBox"></CheckBox>
+            </StackPanel>
+            <Button Content="Добавить происшествие" Width="160" Margin="3"/>
+        </StackPanel>
     </Grid>
 </UserControl>

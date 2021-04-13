@@ -118,7 +118,8 @@ namespace FireForecasting.Data
         }
 
         private const int __FireCount = 500;
-
+        
+        
         public async Task InitializeFires()
         {
             var timer = Stopwatch.StartNew();
@@ -128,10 +129,16 @@ namespace FireForecasting.Data
             var Fires = Enumerable.Range(1, __FireCount)
                 .Select(i => new Fire
                 {
+                    Date = DateTime.Now,
+                    Region = $"{i + 1} район",
                     Adress = $"Адрес {i + 1}",
+                    RankOfFire = $"Ранг пожара {Rnd.Next(1,4)}",
+                    DescriptionOfFire = new HashCode().ToString(),
+                    CauseOfFire = $"Причина пожара {Rnd.Next(1, 4)}",
+                    CostOfDamage = Rnd.Next(10_000, 500_000_000),
+                    CostOfSaved = Rnd.Next(10_000, 500_000_000),
                     Division =_Divisions[Rnd.Next(1, __DivisionCount)],
                     Employee = _Employees[Rnd.Next(1, __EmployeeCount)],
-                    CostOfDamage = Rnd.Next(10_000, 500_000_000)
                 });
 
             await _db.Fires.AddRangeAsync(Fires);

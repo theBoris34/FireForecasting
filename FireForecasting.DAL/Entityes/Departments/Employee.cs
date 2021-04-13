@@ -14,6 +14,7 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <summary> Звание сотрудника. </summary>
         public string Rank { get; set; }
 
+
         public override string ToString()
         {
             return $"{Rank}, {Surname} {Name} {Patronymic}";

@@ -20,7 +20,7 @@ namespace FireForecasting.DAL.Entityes.Departments
 
         public override string ToString()
         {
-            return $"{Name} {Department.Name}";
+            return $"{Name}";
         }
     }
 }

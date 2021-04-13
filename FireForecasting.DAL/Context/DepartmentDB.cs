@@ -13,7 +13,6 @@ namespace FireForecasting.DAL.Context
         public DbSet<Department> Departments { get; set; }
         public DbSet<Division> Divisions { get; set; }
         public DbSet<Employee> Employees { get; set; }
-
         public DepartmentDB(DbContextOptions<DepartmentDB> options):base(options) { }
     }
 }

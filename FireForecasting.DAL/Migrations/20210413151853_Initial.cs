@@ -76,7 +76,13 @@ namespace FireForecasting.DAL.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CostOfDamage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CostOfSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CauseOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RankOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DescriptionOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true),
                     DivisionId = table.Column<int>(type: "int", nullable: true)
                 },

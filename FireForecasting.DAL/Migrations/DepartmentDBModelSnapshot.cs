@@ -112,14 +112,32 @@ namespace FireForecasting.DAL.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CauseOfFire")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("CostOfDamage")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CostOfSaved")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DescriptionOfFire")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("DivisionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("RankOfFire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

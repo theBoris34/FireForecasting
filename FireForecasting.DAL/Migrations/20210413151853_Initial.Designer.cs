@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireForecasting.DAL.Migrations
 {
     [DbContext(typeof(DepartmentDB))]
-    [Migration("20210314103300_Initial")]
+    [Migration("20210413151853_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,14 +114,32 @@ namespace FireForecasting.DAL.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CauseOfFire")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("CostOfDamage")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CostOfSaved")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DescriptionOfFire")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("DivisionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("RankOfFire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
