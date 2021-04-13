@@ -8,5 +8,6 @@ namespace FireForecasting.ViewModels
     class ViewModelLocator
     {
         public MainWindowViewModel MainWindowModel => App.Services.GetRequiredService<MainWindowViewModel>();
+        public IncidentsViewModel IncidentsViewModel => App.Services.GetRequiredService<IncidentsViewModel>();
     }
 }

@@ -34,7 +34,7 @@ namespace FireForecasting.ViewModels
         public ICommand ShowEmployeeViewCommand => _ShowEmployeeViewCommand
             ??= new LambdaCommand(OnShowEmployeeViewCommandExecuted, CanShowEmployeeViewCommandExecuted);
 
-        private bool CanShowEmployeeViewCommandExecuted() => true;
+        private bool CanShowEmployeeViewCommandExecuted() => !(CurrentModel is EmployeeViewModel);
 
         private void OnShowEmployeeViewCommandExecuted()
         {
@@ -50,7 +50,7 @@ namespace FireForecasting.ViewModels
         public ICommand ShowStatisticViewCommand => _ShowStatisticViewCommand
             ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecuted);
 
-        private bool CanShowStatisticViewCommandExecuted() => true;
+        private bool CanShowStatisticViewCommandExecuted() => !(CurrentModel is StatisticViewModel);
 
         private void OnShowStatisticViewCommandExecuted()
         {
@@ -59,6 +59,23 @@ namespace FireForecasting.ViewModels
 
         #endregion
 
+        #region Команда отображения представления происшествий
+
+        private ICommand _ShowIncidentsViewCommand;
+
+        public ICommand ShowIncidentsViewCommand => _ShowIncidentsViewCommand
+            ??= new LambdaCommand(OnShowIncidentsViewCommandExecuted, CanShowIncidentsViewCommandExecuted);
+
+        private bool CanShowIncidentsViewCommandExecuted() => !(CurrentModel is IncidentsViewModel);
+
+        private void OnShowIncidentsViewCommandExecuted()
+        {
+            CurrentModel = new IncidentsViewModel();
+        }
+
+        #endregion
+
+        
         /// <summary>
         /// 
         /// </summary>

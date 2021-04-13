@@ -16,4 +16,8 @@
         <view:StatisticView DataContext="{Binding}"/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:IncidentsViewModel}">
+        <view:IncidentsView DataContext="{Binding}"/>
+    </DataTemplate>
+    
 </ResourceDictionary>

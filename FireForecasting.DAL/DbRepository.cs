@@ -54,9 +54,11 @@ namespace FireForecasting.DAL
 
         public void Remove(int id)
         {
-            var item = _Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+            //TODO: каскадное удаление?
 
-            _departmentDB.Remove(item);
+            var item = _Set.Local.FirstOrDefault(i => i.Id == id) ?? new T { Id = id };
+            _departmentDB.Entry(item).State = EntityState.Deleted;
+            //_departmentDB.Remove(item);
             if (AutoSaveChanges)
                  _departmentDB.SaveChanges();
 
