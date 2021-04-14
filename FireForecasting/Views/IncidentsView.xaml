@@ -36,8 +36,7 @@
             <DatePicker SelectedDate="{Binding SelectedDateBefore, UpdateSourceTrigger=PropertyChanged}" Width="100" SelectedDateFormat="Short" Text="Дата От" Margin="3" FirstDayOfWeek="Monday" IsTabStop="True" IsTodayHighlighted="True" VerticalContentAlignment="Top"/>
             <TextBlock Text="до" Margin="5,5" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding SelectedDateAfter, UpdateSourceTrigger=PropertyChanged}" Width="100" Text="Дата До" Margin="3" FirstDayOfWeek="Monday" AutomationProperties.IsRequiredForForm="True" AutomationProperties.IsOffscreenBehavior="Default" FontStyle="Normal"/>
-            <Button Content="Показать" Width="80" Margin="10,3" />
-        </StackPanel>
+          </StackPanel>
         <DataGrid ItemsSource="{Binding IncidentView}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Дата" Width="70" Binding="{Binding Path=Date, StringFormat={}{0:dd-MM-yyyy}}"/>

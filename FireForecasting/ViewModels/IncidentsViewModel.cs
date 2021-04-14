@@ -72,24 +72,15 @@ namespace FireForecasting.ViewModels
         private void OnIncidentFilter(object sender, FilterEventArgs e)
         {
             if (!(e.Item is Fire incident)) return;
-
             if (!((incident.Date.Date >= SelectedDateBefore.Date) && (incident.Date.Date <= SelectedDateAfter.Date)))//если не содержит
                 e.Accepted = false;
 
-            if (!(e.Item is Fire incident1) || string.IsNullOrEmpty(IncidentFilter)) return;
+            if (string.IsNullOrEmpty(IncidentFilter)) return;
 
-            if (!incident1.Adress.ToLower().Contains(IncidentFilter.ToLower()))
+            if (!incident.Adress.ToLower().Contains(IncidentFilter.ToLower()))
                 e.Accepted = false;
         }
 
-        private void OnIncidentDateFilter(object sender, FilterEventArgs e)
-        {
-
-            if (!(e.Item is Fire incident)) return;
-
-            if (!((incident.Date.Date >= SelectedDateBefore.Date)&&(incident.Date.Date <= SelectedDateAfter.Date)))//если не содержит
-                e.Accepted = false;
-        }
 
 
         private ObservableCollection<Fire> _IncidentsCollection;
@@ -153,7 +144,6 @@ namespace FireForecasting.ViewModels
             };
 
             _IncidentViewSource.Filter += OnIncidentFilter;
-            //_IncidentViewSource.Filter += OnIncidentDateFilter;
 
            
         }
