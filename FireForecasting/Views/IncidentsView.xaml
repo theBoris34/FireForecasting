@@ -67,7 +67,7 @@
                 <TextBlock Text="Выделить всё" Margin="5,0" VerticalAlignment="Center"/>
                 <CheckBox Name="AllCheckBox"></CheckBox>
             </StackPanel>
-            <Button Content="Добавить происшествие" Width="160" Margin="3"/>
+            <Button Content="Добавить происшествие" Command="{Binding EditFireCommand}" Width="160" Margin="3"/>
         </StackPanel>
     </Grid>
 </UserControl>

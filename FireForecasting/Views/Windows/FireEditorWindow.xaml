@@ -1,0 +1,45 @@
+﻿<Window x:Class="FireForecasting.Views.Windows.FireEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FireForecasting.Views.Windows"
+        xmlns:vm="clr-namespace:FireForecasting.ViewModels"    
+        d:DataContext="{d:DesignInstance vm:FireEditorViewModel, IsDesignTimeCreatable=True}"    
+        mc:Ignorable="d"        
+        Title="{Binding Title}" Height="450" Width="800" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock  Text="Время:" Margin="5,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TimeMessage}" VerticalAlignment="Center"/>
+            <TextBlock  Text="Район:" Margin="5,0" VerticalAlignment="Center"/>
+            <ComboBox Width="150" IsEditable="True">
+                <ComboBoxItem Content="Бабынинский район"/>
+                <ComboBoxItem Content="Барятинский район"/>
+            </ComboBox>
+            <TextBlock  Text="Адрес:" Margin="5,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Address}" Width="400"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+            <TextBlock  Text="Ранг:" Margin="5,0" VerticalAlignment="Center"/>
+            <ComboBox ItemsSource="{Binding RanksFire}" SelectedItem="{Binding RankFire}" Width="70" VerticalAlignment="Center"/>
+            <TextBlock  Text="Район:" Margin="5,0" VerticalAlignment="Center"/>
+            <ComboBox Width="150" IsEditable="True">
+                <ComboBoxItem Content="Бабынинский район"/>
+                <ComboBoxItem Content="Барятинский район"/>
+            </ComboBox>
+            
+        </StackPanel>
+        <Grid Grid.Row="3">
+            <TextBlock  Text="Описание:" Margin="5,0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding DescriptionOfFire}" Width="400"/>
+        </Grid>
+
+    </Grid>
+</Window>

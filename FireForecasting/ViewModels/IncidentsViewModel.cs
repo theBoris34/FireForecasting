@@ -1,5 +1,6 @@
 ﻿using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
+using FireForecasting.Views.Windows;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -117,7 +118,24 @@ namespace FireForecasting.ViewModels
         #endregion
 
 
+        #region Команда открытия окна редактирования пожаров
+        private ICommand _EditFireCommand;
 
+        public ICommand EditFireCommand => _EditFireCommand
+            ??= new LambdaCommand(OnEditFireCommandExecuted, CanEditFireCommandExecuted);
+
+        private bool CanEditFireCommandExecuted() => true;
+
+        private void OnEditFireCommandExecuted()
+        {
+            var fire_editor_model = new FireEditorViewModel();
+            var fire_editor_window = new FireEditorWindow
+            {
+                DataContext = fire_editor_model
+            };
+            fire_editor_window.ShowDialog();
+        }
+        #endregion
 
 
 
