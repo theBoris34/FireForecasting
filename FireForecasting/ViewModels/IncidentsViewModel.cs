@@ -1,4 +1,5 @@
-﻿using FireForecasting.DAL.Entityes.Incidents;
+﻿using FireForecasting.DAL.Entityes.Departments;
+using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
 using FireForecasting.Views.Windows;
 using MathCore.WPF.Commands;
@@ -17,6 +18,9 @@ namespace FireForecasting.ViewModels
 {
     class IncidentsViewModel : ViewModel
     {
+
+        private readonly IRepository<Employee> _EmployeeRepository;
+        private readonly IRepository<Division> _DivisionRepository;
 
         public string Title = "Список происшествий";
 
@@ -128,7 +132,7 @@ namespace FireForecasting.ViewModels
 
         private void OnEditFireCommandExecuted()
         {
-            var fire_editor_model = new FireEditorViewModel();
+            var fire_editor_model = new FireEditorViewModel(_EmployeeRepository,_DivisionRepository);
             var fire_editor_window = new FireEditorWindow
             {
                 DataContext = fire_editor_model
@@ -149,9 +153,12 @@ namespace FireForecasting.ViewModels
 
         }
 
-        public IncidentsViewModel(IRepository<Fire> FireRepository)
+        public IncidentsViewModel(IRepository<Employee> EmployeeRepository, IRepository<Division> DivisionRepository, IRepository<Fire> FireRepository)
         {
             _FireRepository = FireRepository;
+            _EmployeeRepository = EmployeeRepository;
+            _DivisionRepository = DivisionRepository;
+
 
             _IncidentViewSource = new CollectionViewSource
             {

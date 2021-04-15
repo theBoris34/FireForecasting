@@ -70,7 +70,7 @@ namespace FireForecasting.ViewModels
 
         private void OnShowIncidentsViewCommandExecuted()
         {
-            CurrentModel = new IncidentsViewModel(_FireRepository);
+            CurrentModel = new IncidentsViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository);
         }
 
         #endregion

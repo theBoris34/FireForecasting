@@ -1,7 +1,12 @@
-﻿using MathCore.WPF.ViewModels;
+﻿using FireForecasting.DAL.Entityes.Departments;
+using FireForecasting.Interfaces;
+using MathCore.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
+using System.Windows.Data;
 
 namespace FireForecasting.ViewModels
 {
@@ -27,7 +32,17 @@ namespace FireForecasting.ViewModels
         }
         #endregion
 
-        #region Address - Заголовок окна
+        #region Region - Район
+        private string _Region;
+
+        public string Region
+        {
+            get => _Region;
+            set => Set(ref _Region, value);
+        }
+        #endregion  
+
+        #region Address - Адрес
         private string _Address;
 
         public string Address
@@ -67,28 +82,112 @@ namespace FireForecasting.ViewModels
         }
         #endregion
 
-        #region DescriptionOfFire - Описание пожара
-        private string _DescriptionOfFire;
+        #region СauseOfFire - Причина пожара
+        private string _СauseOfFire;
 
-        public string DescriptionOfFire
+        public string СauseOfFire
         {
-            get => _DescriptionOfFire;
-            set => Set(ref _DescriptionOfFire, value);
+            get => _СauseOfFire;
+            set => Set(ref _СauseOfFire, value);
         }
         #endregion
 
+        #region CostOfDamage - Ущерб
+        private decimal _CostOfDamage;
+
+        public decimal CostOfDamage
+        {
+            get => _CostOfDamage;
+            set => Set(ref _CostOfDamage, value);
+        }
+        #endregion
+
+        #region CostOfSaved - Спасено
+        private decimal _CostOfSaved;
+
+        public decimal CostOfSaved
+        {
+            get => _CostOfSaved;
+            set => Set(ref _CostOfSaved, value);
+        }
+        #endregion
+
+        private string _DivisionFilter;
+
+        public string DivisionFilter
+        {
+            get => _DivisionFilter;
+            set
+            {
+                if (Set(ref _DivisionFilter, value))
+                    _EmployeeViewSource.View.Refresh();
+            }
+        }
+
+        private void OnDivisionFilter(object sender, FilterEventArgs e)
+        {
+
+            if (!(e.Item is Employee employee) || string.IsNullOrEmpty(DivisionFilter)) return;
+
+            if (!(employee.Name.ToLower().Contains(DivisionFilter.ToLower()) || employee.Division.ToString().ToLower().Contains(DivisionFilter.ToLower())))
+                e.Accepted = false;
+        }
+
+        private readonly IRepository<Employee> _EmployeeRepository;
+        private readonly IRepository<Division> _DivisionRepository;
+
+
+        //2. CollectionViewSource ему присвоить источник данных.
+        //3. Свойство CollectionViewSource.View
+
+        private readonly CollectionViewSource _EmployeeViewSource;
+
+        public ICollectionView EmployeeView => _EmployeeViewSource.View;
+
+        //public IEnumerable<Employee> Employees => _EmployeeRepository.Items;
+
+        private ObservableCollection<Employee> _EmployeesCollection;
+        public ObservableCollection<Employee> EmployeesCollection
+        {
+            get => _EmployeesCollection;
+            set
+            {
+                if (Set(ref _EmployeesCollection, value))
+                {
+                    _EmployeeViewSource.Source = value;
+                    _EmployeeViewSource.View.Refresh();
+                    OnPropertyChanged(nameof(EmployeeView));
+                }
+            }
+        }
 
         public FireEditorViewModel()
         {
+
+        }
+        public FireEditorViewModel(IRepository<Employee> EmployeeRepository, IRepository<Division> DivisionRepository)
+        {
+            _EmployeeRepository = EmployeeRepository;
+            _DivisionRepository = DivisionRepository; 
+            _EmployeeViewSource = new CollectionViewSource
+            {
+                SortDescriptions =
+                {
+                    new SortDescription(nameof(Employee.Name), ListSortDirection.Ascending)
+                }
+            };
+            EmployeesCollection = new ObservableCollection<Employee>(_EmployeeRepository.Items);
+
             RanksFire = new List<string>()                    //TODO: Вывести из модели-представления
             {                                                 //TODO: Вывести из модели-представления
                 "1","1-Бис", "2", "3", "4", "5"               //TODO: Вывести из модели-представления
             };                                                //TODO: Вывести из модели-представления
 
 
+            _EmployeeViewSource.Filter += OnDivisionFilter;
 
 
-        //public Fire(DateTime date, string region, string adress, string rankOfFire, string DescriptionOfFire, string causeOfFire, decimal costOfDamage, decimal costOfSaved, Employee employee, Division division)
+            //public Fire(DateTime date, string region, string adress, string rankOfFire, string DescriptionOfFire, string causeOfFire, decimal CostOfDamage, decimal CostOfSaved, Employee employee, Division division)
         }
     }
 }
