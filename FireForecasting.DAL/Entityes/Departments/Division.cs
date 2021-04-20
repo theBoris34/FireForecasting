@@ -18,6 +18,9 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <summary> Список сотрудников. </summary>
         public virtual ICollection<Employee> Employees { get; set; }
 
+        /// <summary> Список техники. </summary>
+        public virtual ICollection<FireTruck> FireTrucks { get; set; }
+
         public override string ToString()
         {
             return $"{Name}";
