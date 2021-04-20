@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireForecasting.DAL.Migrations
 {
     [DbContext(typeof(DepartmentDB))]
-    [Migration("20210413151853_Initial")]
-    partial class Initial
+    [Migration("20210420111038_Initial_Truck")]
+    partial class Initial_Truck
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,63 @@ namespace FireForecasting.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("FireForecasting.DAL.Entityes.Base.FireTruckBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FireEngine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("FoamVolume")
+                        .HasColumnType("real");
+
+                    b.Property<int>("FuelVolume")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("LiftingHeight")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("MaxSpeed")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte>("NumberOfSeats")
+                        .HasColumnType("tinyint");
+
+                    b.Property<double>("PumpCapacity")
+                        .HasColumnType("float");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("TankVolume")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("YearOfCreation")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FireTruckBase");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("FireTruckBase");
+                });
 
             modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.Department", b =>
                 {
@@ -150,6 +207,18 @@ namespace FireForecasting.DAL.Migrations
                     b.ToTable("Fires");
                 });
 
+            modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.FireTruck", b =>
+                {
+                    b.HasBaseType("FireForecasting.DAL.Entityes.Base.FireTruckBase");
+
+                    b.Property<int?>("DivisionId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("DivisionId");
+
+                    b.HasDiscriminator().HasValue("FireTruck");
+                });
+
             modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.Division", b =>
                 {
                     b.HasOne("FireForecasting.DAL.Entityes.Departments.Department", "Department")
@@ -183,6 +252,15 @@ namespace FireForecasting.DAL.Migrations
                     b.Navigation("Employee");
                 });
 
+            modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.FireTruck", b =>
+                {
+                    b.HasOne("FireForecasting.DAL.Entityes.Departments.Division", "Division")
+                        .WithMany("FireTrucks")
+                        .HasForeignKey("DivisionId");
+
+                    b.Navigation("Division");
+                });
+
             modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.Department", b =>
                 {
                     b.Navigation("Divisions");
@@ -191,6 +269,8 @@ namespace FireForecasting.DAL.Migrations
             modelBuilder.Entity("FireForecasting.DAL.Entityes.Departments.Division", b =>
                 {
                     b.Navigation("Employees");
+
+                    b.Navigation("FireTrucks");
                 });
 #pragma warning restore 612, 618
         }

@@ -29,9 +29,9 @@ namespace FireForecasting.Data
         {
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация БД...");
-            //_Logger.LogInformation("Удаление существующей БД...");
-            //await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
-            //_Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
+            _Logger.LogInformation("Удаление существующей БД...");
+            await _db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+            _Logger.LogInformation("Удаление существующей БД выполнено за {0} мс", timer.ElapsedMilliseconds);
             _Logger.LogInformation("Миграция БД...");
             await _db.Database.MigrateAsync();
             _Logger.LogInformation("Миграция БД выполнено за {0} мс", timer.ElapsedMilliseconds);
@@ -42,6 +42,8 @@ namespace FireForecasting.Data
             await InitializeDivisions();
             await InitializeEmployees();
             await InitializeFires();
+            await InitializeFireTruckBase();
+            await InitializeFireTruck();
 
 
             _Logger.LogInformation("Инициализация БД выполнена за {0} с", timer.Elapsed.TotalSeconds);
@@ -189,7 +191,7 @@ namespace FireForecasting.Data
         {
             var timer = Stopwatch.StartNew();
             _Logger.LogInformation("Инициализация пожарных автомобилей...");
-
+            _FireTruck = new FireTruck[__FireTruckCount];
             var Rnd = new Random();
             for (var i = 0; i < __FireTruckCount; i++)
                 _FireTruck[i] = new FireTruck(_FireTruckBase[Rnd.Next(1, __FireTruckBaseCount)], _Divisions[Rnd.Next(1, __DivisionCount)]);
