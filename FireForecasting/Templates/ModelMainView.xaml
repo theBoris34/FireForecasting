@@ -24,4 +24,8 @@
         <view:IncidentsView DataContext="{Binding}"/>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:FireTruckViewModel}">
+        <view:FireTruckView DataContext="{Binding}"/>
+    </DataTemplate>
+
 </ResourceDictionary>

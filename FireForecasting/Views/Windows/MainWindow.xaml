@@ -12,6 +12,7 @@
             <MenuItem Header="Сотрудники" Command="{Binding ShowEmployeeViewCommand}"/>
             <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>
             <MenuItem Header="Список происшествий" Command="{Binding ShowIncidentsViewCommand}"/>
+            <MenuItem Header="Техника" Command="{Binding ShowIncidentsViewCommand}"/>
             
         </Menu>
         <StatusBar>
