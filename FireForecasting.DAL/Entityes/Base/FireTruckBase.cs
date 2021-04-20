@@ -3,12 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FireForecasting.DAL.Entityes.Departments
+namespace FireForecasting.DAL.Entityes.Base
 {
     /// <summary>
     /// Пожарный автомобиль
     /// </summary>
-    class FireTruckBase:Entity
+    public class FireTruckBase:Entity
     {
         #region Свойства
         /// <summary>
@@ -54,15 +54,15 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <summary>
         /// Объем цистерны для воды - м3.
         /// </summary>
-        public int TankVolume { get; set; }
+        public float TankVolume { get; set; }
 
         /// <summary>
         /// Объем цистерны для пенообразователя - м3.
         /// </summary>
-        public int FoamVolume { get; set; }
+        public float FoamVolume { get; set; }
 
         /// <summary>
-        /// Объем бензобака - м3.
+        /// Объем бензобака - л.
         /// </summary>
         public int FuelVolume { get; set; }
 
@@ -76,7 +76,7 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <summary>
         /// Высота подъема стрелы - м.
         /// </summary>
-        public int LiftingHeight { get; set; }
+        public byte LiftingHeight { get; set; }
         #endregion
 
         public FireTruckBase() : this("None", "None",DateTime.Now,1,60,50)
@@ -127,7 +127,7 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <param name="tankVolume">Объем цистерны.</param>
         /// <param name="foamVolume">Объем пенообразователя.</param>
         /// <param name="pumpCapacity">Производительность насоса.</param>
-        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, string fireEngine, int tankVolume, int foamVolume, double pumpCapacity) 
+        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, string fireEngine, float tankVolume, float foamVolume, double pumpCapacity) 
             : this(brand, model, yearOfCreation, numberOfSeats, maxSpeed, fuelVolume)
         {
             if (string.IsNullOrEmpty(type))
@@ -155,7 +155,7 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <param name="foamVolume">Объем пенообразователя.</param>
         /// <param name="pumpCapacity">Производительность насоса.</param>
         /// <param name="liftingHeight">Высота стрелы.</param>
-        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, string fireEngine, int tankVolume, int foamVolume, double pumpCapacity, int liftingHeight)
+        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, string fireEngine, float tankVolume, float foamVolume, double pumpCapacity, byte liftingHeight)
             : this(type, brand, model, yearOfCreation, numberOfSeats, maxSpeed, fuelVolume, fireEngine, tankVolume, foamVolume, pumpCapacity)
         {            
             LiftingHeight = liftingHeight;
@@ -172,7 +172,7 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// <param name="maxSpeed">Максимальная скорость.</param>
         /// <param name="fuelVolume">Объем бензобака.</param>
         /// <param name="liftingHeight">Высота стрелы.</param>
-        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, int liftingHeight)
+        public FireTruckBase(string type, string brand, string model, DateTime yearOfCreation, byte numberOfSeats, byte maxSpeed, int fuelVolume, byte liftingHeight)
             : this(brand, model, yearOfCreation, numberOfSeats, maxSpeed, fuelVolume)
         {
             if (string.IsNullOrEmpty(type))
