@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FireForecasting.DAL.Migrations
 {
-    public partial class Initial_Truck : Migration
+    public partial class FireFull : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -112,12 +112,24 @@ namespace FireForecasting.DAL.Migrations
                     CostOfSaved = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DistanceToFire = table.Column<double>(type: "float", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CheckOutTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FirstBarrelTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LocalizationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LiquidationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationOfLocalization = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationOfLiquidation = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DurationOfWork = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CauseOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RankOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DescriptionOfFire = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmployeeId = table.Column<int>(type: "int", nullable: true),
-                    DivisionId = table.Column<int>(type: "int", nullable: true)
+                    DivisionId = table.Column<int>(type: "int", nullable: true),
+                    Casualties = table.Column<int>(type: "int", nullable: false),
+                    Affected = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

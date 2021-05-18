@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FireForecasting.DAL.Migrations
 {
     [DbContext(typeof(DepartmentDB))]
-    [Migration("20210420111038_Initial_Truck")]
-    partial class Initial_Truck
+    [Migration("20210518113938_FireFull")]
+    partial class FireFull
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -171,8 +171,23 @@ namespace FireForecasting.DAL.Migrations
                     b.Property<string>("Adress")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Affected")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Casualties")
+                        .HasColumnType("int");
+
                     b.Property<string>("CauseOfFire")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CheckOutTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CompletionTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("CostOfDamage")
                         .HasColumnType("decimal(18,2)");
@@ -186,11 +201,32 @@ namespace FireForecasting.DAL.Migrations
                     b.Property<string>("DescriptionOfFire")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("DistanceToFire")
+                        .HasColumnType("float");
+
                     b.Property<int?>("DivisionId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DurationOfLiquidation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DurationOfLocalization")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DurationOfWork")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("FirstBarrelTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LiquidationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LocalizationTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("RankOfFire")
                         .HasColumnType("nvarchar(max)");

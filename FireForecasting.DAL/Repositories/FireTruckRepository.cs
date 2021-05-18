@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FireForecasting.DAL.Repositories
+namespace FireForecasting.DAL
 {
     class FireTruckRepository:DbRepository<FireTruck>
     {

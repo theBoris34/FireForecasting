@@ -15,6 +15,7 @@ namespace FireForecasting.DAL
             .AddTransient<IRepository<Division>, DivisionRepository>()
             .AddTransient<IRepository<Employee>, EmployeeRepository>()
             .AddTransient<IRepository<Fire>, FireRepository>()
+            .AddTransient<IRepository<FireTruck>, FireTruckRepository>()
             ;
     }
 }
