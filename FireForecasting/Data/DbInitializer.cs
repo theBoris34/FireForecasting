@@ -38,12 +38,12 @@ namespace FireForecasting.Data
 
             if (await _db.Employees.AnyAsync()) return;
 
-            await InitializeDepartments();
-            await InitializeDivisions();
-            await InitializeEmployees();
-            await InitializeFires();
-            await InitializeFireTruckBase();
-            await InitializeFireTruck();
+            //await InitializeDepartments();
+            //await InitializeDivisions();
+            //await InitializeEmployees();
+            //await InitializeFires();
+            //await InitializeFireTruckBase();
+            //await InitializeFireTruck();
 
 
             _Logger.LogInformation("Инициализация БД выполнена за {0} с", timer.Elapsed.TotalSeconds);
