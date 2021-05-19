@@ -7,8 +7,15 @@ namespace FireForecasting.DAL.Entityes.Departments
 {
     public class FireTruck:FireTruckBase
     {
-
+        /// <summary>
+        /// Подразделение дислокации автомобиля.
+        /// </summary>
         public virtual Division Division { get; set; }
+
+        /// <summary>
+        /// Экипаж пожарного автомобиля.
+        /// </summary>
+        public virtual List<Employee> Crew { get; set; }
 
         public FireTruck()
         {

@@ -1,4 +1,5 @@
 ﻿using FireForecasting.DAL.Entityes.Base;
+using FireForecasting.DAL.Entityes.Departments;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -68,7 +69,7 @@ namespace FireForecasting.DAL.Entityes.Base
 
 
         /// <summary>
-        /// Производительность пожарного насоса – л/сек.
+        /// Производительность пожарного насоса – л/мин.
         /// </summary>
         public double PumpCapacity { get; set; }
 
@@ -77,6 +78,7 @@ namespace FireForecasting.DAL.Entityes.Base
         /// Высота подъема стрелы - м.
         /// </summary>
         public byte LiftingHeight { get; set; }
+
         #endregion
 
         public FireTruckBase() : this("None", "None",DateTime.Now,1,60,50)
@@ -117,6 +119,7 @@ namespace FireForecasting.DAL.Entityes.Base
         /// <summary>
         /// Создание экземпляра Пожарного автомобиля с цистерной.
         /// </summary>
+        /// <param name="type">Тип автомобиля.</param>
         /// <param name="brand">Производитель автомобиля.</param>
         /// <param name="model">Модель автомобиля.</param>
         /// <param name="yearOfCreation">Год выпуска.</param>

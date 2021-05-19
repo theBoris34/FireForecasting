@@ -5,11 +5,26 @@ using System.Text;
 
 namespace FireForecasting.DAL.Entityes.Departments
 {
+
+
     /// <summary>
     /// Отделение (автомобиль + сотрудники).
     /// </summary>
     class FireBrigade:Entity
     {
+        /// <summary>
+        /// Автомобиль.
+        /// </summary>
+        public FireTruck FireTruck { get; set; }
+        /// <summary>
+        /// Список личного состава.
+        /// </summary>
+        public List<Employee> Crew { get; set; }
+        public FireBrigade(FireTruck fireTruck, List<Employee> crew)
+        {
+            FireTruck = fireTruck;
+            Crew = crew;
+        }
 
     }
 }
