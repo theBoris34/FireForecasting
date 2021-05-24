@@ -176,15 +176,7 @@ namespace FireForecasting.ViewModels
 
 
             var FireStatics = new FireStatistic(FireRepository);
-
-            var _Test =  _FireRepository.Items.GroupBy(x => new { Date = x.Date.Date.Month, Year = x.Date.Date.Year })
-                     .Select(x => new
-                     {
-                         FiresCount = x.Count(),
-                         Month = x.Key.Date,
-                         Year = x.Key.Year
-                     }).OrderBy(x=>x.Year).ThenBy(x=>x.Month)
-                     .ToDictionary(f => new DateTime(f.Year, f.Month, 1), f => f.FiresCount);
+            
 
             _IncidentViewSource.Filter += OnIncidentFilter;
 

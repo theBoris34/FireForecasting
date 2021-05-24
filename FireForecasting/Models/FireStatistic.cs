@@ -50,6 +50,22 @@ namespace FireForecasting.Models
             set => Set(ref _FiresPerMounth, value);
         }
 
+        private Dictionary<DateTime, int> _FiresPerYear;
+        public Dictionary<DateTime, int> FiresPerYear
+        {
+            get
+            {
+                return _FireRepository.Items.GroupBy(x => new { Year = x.Date.Date.Year })
+                    .Select(x => new
+                    {
+                        FiresCount = x.Count(),
+                        Year = x.Key.Year
+                    }).OrderBy(x => x.Year)
+                    .ToDictionary(f => new DateTime(f.Year, 1, 1), f => f.FiresCount);
+            }
+            set => Set(ref _FiresPerYear, value);
+        }
+
         public FireStatistic(IRepository<Fire> fireRepository)
         {
             _FireRepository = fireRepository;
