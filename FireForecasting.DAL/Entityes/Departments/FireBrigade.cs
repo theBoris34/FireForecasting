@@ -10,7 +10,7 @@ namespace FireForecasting.DAL.Entityes.Departments
     /// <summary>
     /// Отделение (автомобиль + сотрудники).
     /// </summary>
-    class FireBrigade:Entity
+    public class FireBrigade:Entity
     {
         /// <summary>
         /// Автомобиль.
@@ -20,6 +20,10 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// Список личного состава.
         /// </summary>
         public List<Employee> Crew { get; set; }
+        public FireBrigade()
+        {
+
+        }
         public FireBrigade(FireTruck fireTruck, List<Employee> crew)
         {
             FireTruck = fireTruck;

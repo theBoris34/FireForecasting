@@ -32,6 +32,11 @@ namespace FireForecasting.DAL.Entityes.Departments
         /// </summary>
         public Employee ShiftSupervisor { get; set; }
 
+        public DutyShift()
+        {
+
+        }
+
         public DutyShift(DateTime date, List<FireBrigade> fireBrigades, Employee dispatcher, Employee shiftSupervisor)
         {
             Date = date;

@@ -1,6 +1,7 @@
 ﻿using FireForecasting.DAL.Entityes.Departments;
 using FireForecasting.DAL.Entityes.Incidents;
 using FireForecasting.Interfaces;
+using FireForecasting.Models;
 using FireForecasting.Views.Windows;
 using MathCore.WPF.Commands;
 using MathCore.WPF.ViewModels;
@@ -9,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -153,6 +156,9 @@ namespace FireForecasting.ViewModels
 
         }
 
+
+        public IQueryable FiresMonth { get; set; } 
+
         public IncidentsViewModel(IRepository<Employee> EmployeeRepository, IRepository<Division> DivisionRepository, IRepository<Fire> FireRepository)
         {
             _FireRepository = FireRepository;
@@ -168,14 +174,28 @@ namespace FireForecasting.ViewModels
                 }
             };
 
+
+            var FireStatics = new FireStatistic(FireRepository);
+
+            var _Test =  _FireRepository.Items.GroupBy(x => new { Date = x.Date.Date.Month, Year = x.Date.Date.Year })
+                     .Select(x => new
+                     {
+                         FiresCount = x.Count(),
+                         Month = x.Key.Date,
+                         Year = x.Key.Year
+                     }).OrderBy(x=>x.Year).ThenBy(x=>x.Month)
+                     .ToDictionary(f => new DateTime(f.Year, f.Month, 1), f => f.FiresCount);
+
             _IncidentViewSource.Filter += OnIncidentFilter;
 
-           
         }
+
+        
 
 
 
 
 
     }
+
 }

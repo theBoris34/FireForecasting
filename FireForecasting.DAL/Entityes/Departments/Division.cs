@@ -6,7 +6,7 @@ namespace FireForecasting.DAL.Entityes.Departments
     /// <summary> Подразделение. </summary>
     public class Division:Entity
     {
-        public DutyShift CurrentDutyShift { get; set; }
+        public virtual List<DutyShift> DutyShifts { get; set; }
         /// <summary> Управление. </summary>
         public virtual Department Department { get; set; }
 
