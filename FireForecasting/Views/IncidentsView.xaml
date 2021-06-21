@@ -37,8 +37,7 @@
             <TextBlock Text="до" Margin="5,5" VerticalAlignment="Center"/>
             <DatePicker SelectedDate="{Binding SelectedDateAfter, UpdateSourceTrigger=PropertyChanged}" Width="100" Text="Дата До" Margin="3" FirstDayOfWeek="Monday" AutomationProperties.IsRequiredForForm="True" AutomationProperties.IsOffscreenBehavior="Default" FontStyle="Normal"/>
           </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <DataGrid ItemsSource="{Binding IncidentView}" AutoGenerateColumns="False" Grid.Row="1" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="0,0,0,0">
+            <DataGrid ItemsSource="{Binding IncidentView}" Grid.Row="1"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="0,0,0,0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Дата" Width="70" Binding="{Binding Path=Date, StringFormat={}{0:dd-MM-yyyy}}"/>
                     <DataGridTextColumn Header="Время" Width="50" Binding="{Binding Path=Date, StringFormat={}{0:HH:mm}}"/>
@@ -47,10 +46,7 @@
                     <DataGridTextColumn Header="Состояние"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid ItemsSource="{Binding FiresMonth}"> 
-            </DataGrid>
 
-        </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <StackPanel Orientation="Horizontal" Margin="5,5" OpacityMask="Red">
                 <fa5:SvgAwesome Icon="Solid_Fire" Height="15" Width="15" />

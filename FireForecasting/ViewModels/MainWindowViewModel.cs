@@ -14,12 +14,11 @@ namespace FireForecasting.ViewModels
 {
     class MainWindowViewModel:ViewModel
     {
-        private string _Title = "Главное окно программы!";
+        private string _Title = "Система прогнозирования пожаров";
         private readonly IUserDialog _UserDialog;
         private readonly IRepository<Employee> _EmployeeRepository;
         private readonly IRepository<Division> _DivisionRepository;
         private readonly IRepository<Fire> _FireRepository;
-        //private readonly IRepository<FireTruck> _FireTruckRepository;
         private readonly IFireService _FireService;
 
         public string Title { get=>_Title; set => Set(ref _Title,value); }
@@ -95,10 +94,8 @@ namespace FireForecasting.ViewModels
             _EmployeeRepository = EmployeeRepository;
             _DivisionRepository = DivisionRepository;
             _FireRepository = FireRepository;
-            //_FireTruckRepository = FireTruckRepository;
             _FireService = FireService;
 
-            //Test();
         }
 
         private async void Test()

@@ -7,6 +7,8 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using OxyPlot;
+using OxyPlot.Series;
 
 namespace FireForecasting.Models
 {
@@ -69,8 +71,8 @@ namespace FireForecasting.Models
         public FireStatistic(IRepository<Fire> fireRepository)
         {
             _FireRepository = fireRepository;
-
             GetFirePerMonth();
+
 
         }
 
