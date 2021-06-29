@@ -16,6 +16,21 @@ namespace FireForecasting
         
     public partial class App : Application
     {
+
+        public static Window ActiveWindow => Application.Current.Windows.
+            OfType<Window>()
+            .FirstOrDefault(w => w.IsActive);
+
+        public static Window FocusedWindow => Application.Current.Windows.
+           OfType<Window>()
+           .FirstOrDefault(w => w.IsFocused);
+
+        public static Window CurrentWindow => FocusedWindow ?? ActiveWindow;
+
+
+        /// <summary>
+        /// Флаг проверки режима разработки </summary>
+        public static bool IsDesignTime { get; private set; } = true;
         private static IHost __Host;
         public static IHost Host => __Host 
             ??= Program.CreateHostBuilder(Environment.GetCommandLineArgs()).Build();
@@ -29,7 +44,6 @@ namespace FireForecasting
             .AddViewModel()
             ;
 
-        public static bool IsDesignTime { get; private set; } = true;
 
         protected override async void OnStartup(StartupEventArgs e)
         {
@@ -37,9 +51,8 @@ namespace FireForecasting
 
             var host = Host;
 
-
-            //using (var scope = Services.CreateScope())
-             //   await scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync();
+            using (var scope = Services.CreateScope())
+              await scope.ServiceProvider.GetRequiredService<DbInitializer>().InitializeAsync();
 
             base.OnStartup(e);
             await host.StartAsync();

@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:FireForecasting.Views.Windows"
         mc:Ignorable="d"
         DataContext="{Binding MainWindowModel, Source={StaticResource Locator}}"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <DockPanel>
         <Menu IsMainMenu="True">
             <MenuItem Header="Сотрудники" Command="{Binding ShowEmployeeViewCommand}"/>
             <MenuItem Header="Статистика" Command="{Binding ShowStatisticViewCommand}"/>
+            <MenuItem Header="Список происшествий" Command="{Binding ShowIncidentsViewCommand}"/>
+            <MenuItem Header="Техника" Command="{Binding ShowIncidentsViewCommand}"/>
+            
         </Menu>
         <StatusBar>
             <StatusBarItem>Готово</StatusBarItem>

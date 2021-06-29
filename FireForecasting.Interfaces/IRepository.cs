@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +25,5 @@ namespace FireForecasting.Interfaces
 
         void Remove(int id);
         Task RemoveAsync(int id, CancellationToken Cancel = default);
-
     }
 }

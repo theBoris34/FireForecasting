@@ -1,4 +1,5 @@
 ﻿using FireForecasting.DAL.Context;
+using FireForecasting.DAL.Entityes.Base;
 using FireForecasting.DAL.Entityes.Departments;
 using FireForecasting.DAL.Entityes.Incidents;
 using Microsoft.EntityFrameworkCore;
@@ -37,10 +38,12 @@ namespace FireForecasting.Data
 
             if (await _db.Employees.AnyAsync()) return;
 
-            await InitializeDepartments();
-            await InitializeDivisions();
-            await InitializeEmployees();
-            await InitializeFires();
+            //await InitializeDepartments();
+            //await InitializeDivisions();
+            //await InitializeEmployees();
+            //await InitializeFires();
+            //await InitializeFireTruckBase();
+            //await InitializeFireTruck();
 
 
             _Logger.LogInformation("Инициализация БД выполнена за {0} с", timer.Elapsed.TotalSeconds);
@@ -118,7 +121,8 @@ namespace FireForecasting.Data
         }
 
         private const int __FireCount = 500;
-
+        
+        
         public async Task InitializeFires()
         {
             var timer = Stopwatch.StartNew();
@@ -128,16 +132,74 @@ namespace FireForecasting.Data
             var Fires = Enumerable.Range(1, __FireCount)
                 .Select(i => new Fire
                 {
+                    Date = DateTime.Now,
+                    Region = $"{i + 1} район",
                     Adress = $"Адрес {i + 1}",
+                    RankOfFire = $"Ранг пожара {Rnd.Next(1,4)}",
+                    DescriptionOfFire = new HashCode().ToString(),
+                    CauseOfFire = $"Причина пожара {Rnd.Next(1, 4)}",
+                    CostOfDamage = Rnd.Next(10_000, 500_000_000),
+                    CostOfSaved = Rnd.Next(10_000, 500_000_000),
                     Division =_Divisions[Rnd.Next(1, __DivisionCount)],
                     Employee = _Employees[Rnd.Next(1, __EmployeeCount)],
-                    CostOfDamage = Rnd.Next(10_000, 500_000_000)
                 });
 
             await _db.Fires.AddRangeAsync(Fires);
             await _db.SaveChangesAsync();
             
             _Logger.LogInformation("Инициализация пожаров выполнена за {0} с", timer.Elapsed.TotalSeconds);
+        }
+
+
+
+        private const int __FireTruckBaseCount = 10;
+        private FireTruckBase[] _FireTruckBase;
+        public async Task InitializeFireTruckBase()
+        {
+            var timer = Stopwatch.StartNew();
+            _Logger.LogInformation("Инициализация базовых пожарных автомобилей...");
+
+            var Rnd = new Random();
+            _FireTruckBase = Enumerable.Range(1, __FireTruckBaseCount)
+                .Select(i => new FireTruckBase
+                {
+                    Type = $"Тип ПА {i}",
+                    Brand = $"Бренд ПА {i}",
+                    Model = $"Модель ПА {i}",
+                    YearOfCreation = DateTime.Now,
+                    NumberOfSeats = (byte)Rnd.Next(1, 7),
+                    MaxSpeed = (byte)Rnd.Next(50, 100),
+                    FuelVolume = Rnd.Next(50, 70),
+                    FireEngine = $"Модель установки {i}",
+                    TankVolume = (float)Rnd.Next(1, 5),
+                    FoamVolume = (float)Rnd.Next(1, 5),
+                    PumpCapacity = Rnd.Next(40, 80),
+                    LiftingHeight = (byte)Rnd.Next(30, 70)
+                })
+                .ToArray();
+
+            await _db.FireTruckBase.AddRangeAsync(_FireTruckBase);
+            await _db.SaveChangesAsync();
+
+            _Logger.LogInformation("Инициализация базовых пожарных автомобилей выполнена за {0} с", timer.Elapsed.TotalSeconds);
+        }
+
+
+        private const int __FireTruckCount = __DivisionCount*2;
+        private FireTruck[] _FireTruck;
+        public async Task InitializeFireTruck()
+        {
+            var timer = Stopwatch.StartNew();
+            _Logger.LogInformation("Инициализация пожарных автомобилей...");
+            _FireTruck = new FireTruck[__FireTruckCount];
+            var Rnd = new Random();
+            for (var i = 0; i < __FireTruckCount; i++)
+                _FireTruck[i] = new FireTruck(_FireTruckBase[Rnd.Next(1, __FireTruckBaseCount)], _Divisions[Rnd.Next(1, __DivisionCount)]);
+
+            await _db.FireTruck.AddRangeAsync(_FireTruck);
+            await _db.SaveChangesAsync();
+
+            _Logger.LogInformation("Инициализация пожарных автомобилей выполнена за {0} с", timer.Elapsed.TotalSeconds);
         }
 
     }

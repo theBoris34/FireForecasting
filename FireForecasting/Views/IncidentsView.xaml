@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="FireForecasting.Views.IncidentsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:FireForecasting.ViewModels"
+             xmlns:fa5="http://schemas.fontawesome.com/icons/"
+             xmlns:local="clr-namespace:FireForecasting.Views"       
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             d:DataContext="{d:DesignInstance {x:Type vm:IncidentsViewModel}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_SearchLocation"  Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
+                <TextBox  Text="{Binding IncidentFilter, UpdateSourceTrigger=PropertyChanged}" Width="300" TextAlignment="Left" TextWrapping="NoWrap"  HorizontalContentAlignment="Left"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <fa5:SvgAwesome Icon="Solid_CalendarDay"  Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="15" Width="15" />
+                <TextBlock Text="Фильтр по дате:" VerticalAlignment="Center"/>
+            </StackPanel>            
+            <TextBlock Text="от" Margin="5" VerticalAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding SelectedDateBefore, UpdateSourceTrigger=PropertyChanged}" Width="100" SelectedDateFormat="Short" Text="Дата От" Margin="3" FirstDayOfWeek="Monday" IsTabStop="True" IsTodayHighlighted="True" VerticalContentAlignment="Top"/>
+            <TextBlock Text="до" Margin="5,5" VerticalAlignment="Center"/>
+            <DatePicker SelectedDate="{Binding SelectedDateAfter, UpdateSourceTrigger=PropertyChanged}" Width="100" Text="Дата До" Margin="3" FirstDayOfWeek="Monday" AutomationProperties.IsRequiredForForm="True" AutomationProperties.IsOffscreenBehavior="Default" FontStyle="Normal"/>
+          </StackPanel>
+            <DataGrid ItemsSource="{Binding IncidentView}" Grid.Row="1"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="0,0,0,0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Width="70" Binding="{Binding Path=Date, StringFormat={}{0:dd-MM-yyyy}}"/>
+                    <DataGridTextColumn Header="Время" Width="50" Binding="{Binding Path=Date, StringFormat={}{0:HH:mm}}"/>
+                    <DataGridTextColumn Header="Район" Width="170" Binding="{Binding Path=Region}" />
+                    <DataGridTextColumn Header="Адрес" Width="*" Binding="{Binding Path=Adress}" />
+                    <DataGridTextColumn Header="Состояние"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" Margin="5,5" OpacityMask="Red">
+                <fa5:SvgAwesome Icon="Solid_Fire" Height="15" Width="15" />
+                <TextBlock Text="Пожары" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="FireCheckBox"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_CarSide" Height="15" Width="15" />
+                <TextBlock Text="ДТП" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="RoadAccidentCheckBox"></CheckBox>
+            </StackPanel>            
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Solid_ExclamationTriangle" Height="15" Width="15" />
+                <TextBlock Text="Прочее" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="OtherCheckBox"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,5">
+                <fa5:SvgAwesome Icon="Regular_CheckCircle" Height="15" Width="15" />
+                <TextBlock Text="Выделить всё" Margin="5,0" VerticalAlignment="Center"/>
+                <CheckBox Name="AllCheckBox"></CheckBox>
+            </StackPanel>
+            <Button Content="Добавить происшествие" Command="{Binding EditFireCommand}" Width="160" Margin="3"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

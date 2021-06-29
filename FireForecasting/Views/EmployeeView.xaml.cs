@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 namespace FireForecasting.Views
 {
     /// <summary>
-    /// Логика взаимодействия для EmployeeView.xaml
+    /// Логика взаимодействия для EmployeesView.xaml
     /// </summary>
     public partial class EmployeeView : UserControl
     {

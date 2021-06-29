@@ -14,7 +14,8 @@ namespace FireForecasting.ViewModels
 {
     class MainWindowViewModel:ViewModel
     {
-        private string _Title = "Главное окно программы!";
+        private string _Title = "Система прогнозирования пожаров";
+        private readonly IUserDialog _UserDialog;
         private readonly IRepository<Employee> _EmployeeRepository;
         private readonly IRepository<Division> _DivisionRepository;
         private readonly IRepository<Fire> _FireRepository;
@@ -33,11 +34,11 @@ namespace FireForecasting.ViewModels
         public ICommand ShowEmployeeViewCommand => _ShowEmployeeViewCommand
             ??= new LambdaCommand(OnShowEmployeeViewCommandExecuted, CanShowEmployeeViewCommandExecuted);
 
-        private bool CanShowEmployeeViewCommandExecuted() => true;
+        private bool CanShowEmployeeViewCommandExecuted() => !(CurrentModel is EmployeeViewModel);
 
         private void OnShowEmployeeViewCommandExecuted()
         {
-            CurrentModel = new EmployeeViewModel(_EmployeeRepository);
+            CurrentModel = new EmployeeViewModel(_EmployeeRepository,_DivisionRepository, _UserDialog);
         }
 
         #endregion
@@ -49,15 +50,32 @@ namespace FireForecasting.ViewModels
         public ICommand ShowStatisticViewCommand => _ShowStatisticViewCommand
             ??= new LambdaCommand(OnShowStatisticViewCommandExecuted, CanShowStatisticViewCommandExecuted);
 
-        private bool CanShowStatisticViewCommandExecuted() => true;
+        private bool CanShowStatisticViewCommandExecuted() => !(CurrentModel is StatisticViewModel);
 
         private void OnShowStatisticViewCommandExecuted()
         {
-            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository);
+            CurrentModel = new StatisticViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository, _UserDialog);
         }
 
         #endregion
 
+        #region Команда отображения представления происшествий
+
+        private ICommand _ShowIncidentsViewCommand;
+
+        public ICommand ShowIncidentsViewCommand => _ShowIncidentsViewCommand
+            ??= new LambdaCommand(OnShowIncidentsViewCommandExecuted, CanShowIncidentsViewCommandExecuted);
+
+        private bool CanShowIncidentsViewCommandExecuted() => !(CurrentModel is IncidentsViewModel);
+
+        private void OnShowIncidentsViewCommandExecuted()
+        {
+            CurrentModel = new IncidentsViewModel(_EmployeeRepository, _DivisionRepository, _FireRepository);
+        }
+
+        #endregion
+
+        
         /// <summary>
         /// 
         /// </summary>
@@ -65,17 +83,19 @@ namespace FireForecasting.ViewModels
         /// <param name="DivisionRepository"></param>
         /// <param name="FireService"></param>
         public MainWindowViewModel(
+            IUserDialog UserDialog,
             IRepository<Employee> EmployeeRepository,
             IRepository<Division> DivisionRepository,
             IRepository<Fire> FireRepository,
+            IRepository<FireTruck> FireTruckRepository,
             IFireService FireService)
         {
+            _UserDialog = UserDialog;
             _EmployeeRepository = EmployeeRepository;
             _DivisionRepository = DivisionRepository;
             _FireRepository = FireRepository;
             _FireService = FireService;
 
-            //Test();
         }
 
         private async void Test()

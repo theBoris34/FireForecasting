@@ -9,7 +9,7 @@ namespace FireForecasting.ViewModels
     {
 
         public static IServiceCollection AddViewModel(this IServiceCollection services) => services
-            .AddSingleton<MainWindowViewModel>()
+            .AddTransient<MainWindowViewModel>()
             ;
     }
 }
